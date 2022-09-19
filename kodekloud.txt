@@ -1,5 +1,11 @@
 echo "mjolnir123" | sudo -S yum -y install git && ssh-keygen && git clone https://github.com/kyryll-k/kodekloud.git && cd kodekloud && chmod +x *.sh && bash -x init.sh
 
+
+
+
+
+
+
 ssh-keygen && vi script.sh && chmod +x script.sh && bash -x script.sh
 
 SCRIPT
