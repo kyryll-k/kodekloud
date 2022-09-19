@@ -1,6 +1,6 @@
 #!/bin/bash
 ### vim .ssh/config
-
+touch ~/.ssh/config && chmod 600 ~/.ssh/config
 # --------- SSH-CONFIG
  echo "Host stapp01" >> ~/.ssh/config
  echo "User tony" >> ~/.ssh/config
