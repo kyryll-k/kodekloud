@@ -1,0 +1,88 @@
+ssh-keygen && vi script.sh && chmod +x script.sh && bash -x script.sh 
+
+SCRIPT 
+#!/bin/bash
+echo "thor	mjolnir123" && echo "mjolnir123" | sudo yum -y install bash-completion vim less lynx net-tools sshpass
+sudo su <<'EOF'
+echo "172.16.238.10 stapp01" >> /etc/hosts && echo "172.16.238.11  stapp02" >> /etc/hosts
+echo "172.16.238.12 stapp03" >> /etc/hosts && echo "172.16.238.14  stlb01" >> /etc/hosts
+echo "172.16.239.10 stdb01" >> /etc/hosts && echo "172.16.238.15 ststor1" >> /etc/hosts
+echo "172.16.238.16 stbkp01" >> /etc/hosts && echo "172.16.238.17 stmail01" >> /etc/hosts
+echo "StrictHostKeyChecking no" >> /etc/ssh/ssh_config && echo "ConnectTimeout 5" >> /etc/ssh/ssh_config && systemctl restart sshd.service
+exit
+EOF
+
+echo "alias pas='grep PAS .ssh/config '" >> ~/.bashrc
+echo "alias ssh='pas && ssh '" >> ~/.bashrc && source ~/.bashrc
+echo "Use PAS IF you need to see passwords!" && touch .ssh/config && chmod 600 .ssh/config
+# vim .ssh/config
+
+# --------- SSH-CONFIG
+ echo "Host stapp01" >> ~/.ssh/config
+ echo "User tony" >> ~/.ssh/config
+ echo "   " >> ~/.ssh/config
+ echo "Host stapp02" >> ~/.ssh/config
+ echo "User steve " >> ~/.ssh/config
+ echo "   " >> ~/.ssh/config
+ echo "Host stapp03" >> ~/.ssh/config
+ echo "User banner" >> ~/.ssh/config
+ echo "   " >> ~/.ssh/config
+ echo "Host stlb01" >> ~/.ssh/config
+ echo "User loki " >> ~/.ssh/config
+ echo "   " >> ~/.ssh/config
+ echo "Host stdb01" >> ~/.ssh/config
+ echo "User peter " >> ~/.ssh/config
+ echo "   " >> ~/.ssh/config
+ echo "Host ststor01" >> ~/.ssh/config
+ echo "User natasha " >> ~/.ssh/config
+ echo "   " >> ~/.ssh/config
+ echo "Host stbkp01" >> ~/.ssh/config
+ echo "User clint " >> ~/.ssh/config
+ echo "   " >> ~/.ssh/config
+ echo "Host stmail01" >> ~/.ssh/config
+ echo "User groot " >> ~/.ssh/config
+ echo "   " >> ~/.ssh/config
+ echo "#PAS stapp01 tony Ir0nM@n " >> ~/.ssh/config
+ echo "#PAS stapp02 steve Am3ric@ " >> ~/.ssh/config
+ echo "#PAS stapp03 banner BigGr33n " >> ~/.ssh/config
+ echo "#PAS stlb01 loki Mischi3f " >> ~/.ssh/config
+ echo "#PAS stdb01 peter Sp!dy " >> ~/.ssh/config
+ echo "#PAS ststor01 natasha Bl@kW " >> ~/.ssh/config
+ echo "#PAS stbkp01 clint H@wk3y3 " >> ~/.ssh/config
+ echo "#PAS stmail01 groot Gr00T123 " >> ~/.ssh/config
+
+grep "PAS" .ssh/config
+for i in `grep "Host " ~/.ssh/config | awk '{print $2}'`; do sshpass -p `grep "PAS $i" ~/.ssh/config | awk '{print $4}'` ssh-copy-id $i ; done
+
+sudo yum -y install ansible 
+sudo su <<'EOF'
+sed -i 's/#inventory      = \/etc\/ansible\/hosts/inventory      = ~\/hosts/g' /etc/ansible/ansible.cfg
+# sed -i 's/enable_plugins = host_list, virtualbox, yaml, constructed/enable_plugins = ini, host_list, yaml/g' /etc/ansible/ansible.cfg
+exit
+EOF
+#echo "
+#" >> ~/.ssh/config
+#vim ~/hosts
+
+#mkdir group_vars
+#for i in {stapp01 stapp02 stapp03 stlb01 stdb01 ststor01 stbkp01 stmail01}; do vim group_vars/$i_ ; done
+
+# hosts.ini
+echo "[stapp]" >> ~/hosts
+ echo "stapp01		ansible_user=tony	ansible_ssh_private_key_file=~/.ssh/id_rsa	ansible_sudo_pass=Ir0nM@n " >> ~/hosts
+ echo "stapp02		ansible_user=steve	ansible_ssh_private_key_file=~/.ssh/id_rsa	ansible_sudo_pass=Am3ric@ " >> ~/hosts
+ echo "stapp03		ansible_user=banner	ansible_ssh_private_key_file=~/.ssh/id_rsa	ansible_sudo_pass=BigGr33n" >> ~/hosts
+ echo "   " >> ~/hosts
+echo "[lbdb]" >> ~/hosts
+ echo "stlb01		ansible_user=loki	ansible_ssh_private_key_file=~/.ssh/id_rsa	ansible_sudo_pass=Mischi3f" >> ~/hosts
+ echo "   " >> ~/hosts
+ echo "stdb01		ansible_user=peter	ansible_ssh_private_key_file=~/.ssh/id_rsa	ansible_sudo_pass=Sp!dy " >> ~/hosts
+ echo "   " >> ~/hosts
+echo "[store]" >> ~/hosts
+ echo "ststor01	ansible_user=natasha	ansible_ssh_private_key_file=~/.ssh/id_rsa	ansible_sudo_pass=Bl@kW " >> ~/hosts
+ echo "   " >> ~/hosts
+ echo "stbkp01		ansible_user=clint	ansible_ssh_private_key_file=~/.ssh/id_rsa	ansible_sudo_pass=H@wk3y3 " >> ~/hosts
+ echo "   " >> ~/hosts
+echo "[mail]" >> ~/hosts
+ echo "stmail01	ansible_user=groot	ansible_ssh_private_key_file=~/.ssh/id_rsa	ansible_sudo_pass=Gr00T123" >> ~/hosts
+ echo "   " >> ~/hosts
