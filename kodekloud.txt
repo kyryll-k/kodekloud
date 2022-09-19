@@ -1,8 +1,10 @@
-ssh-keygen && vi script.sh && chmod +x script.sh && bash -x script.sh 
+echo "mjolnir123" | sudo -S yum -y install git && ssh-keygen && git clone https://github.com/kyryll-k/kodekloud.git && cd kodekloud && chmod +x *.sh && bash -x init.sh
 
-SCRIPT 
+ssh-keygen && vi script.sh && chmod +x script.sh && bash -x script.sh
+
+SCRIPT
 #!/bin/bash
-echo "thor	mjolnir123" && echo "mjolnir123" | sudo yum -y install bash-completion vim less lynx net-tools sshpass
+echo "thor	mjolnir123" && echo "mjolnir123" | sudo -S yum -y install bash-completion vim less lynx net-tools sshpass
 sudo su <<'EOF'
 echo "172.16.238.10 stapp01" >> /etc/hosts && echo "172.16.238.11  stapp02" >> /etc/hosts
 echo "172.16.238.12 stapp03" >> /etc/hosts && echo "172.16.238.14  stlb01" >> /etc/hosts
