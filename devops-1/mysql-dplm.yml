@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-dplm
+  labels:
+    type: deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      type: db
+  template:
+    metadata:
+      name: mysql-pod
+    spec:
+      volumes:
+        - name: mysql-pv
+          persistentVolumeClaim:
+          claimName: mysql-pv-claim
+      containers:
+        - name: mysql-container
+          image: mysql-alpine
+          ports:
+            - containerPort: 3306
+              name: "mysql-db"
+          volumeMounts:
+            - mountPath: "/var/lib/mysql"
+              name: mysql-pv
