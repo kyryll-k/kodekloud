@@ -5,8 +5,7 @@ metadata:
 spec:
   type: NodePort
   selector:
-    matchLabels:
-      type: db
+    app.kubernetes.io/name: mysql
   ports:
     - port: 3306
       targetPort: 3306
