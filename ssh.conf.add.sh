@@ -35,6 +35,3 @@ touch ~/.ssh/config && chmod 600 ~/.ssh/config
  echo "#PAS stbkp01 clint H@wk3y3 " >> ~/.ssh/config
  echo "#PAS stmail01 groot Gr00T123 " >> ~/.ssh/config
 
-grep "PAS" .ssh/config
-for i in `grep "Host " ~/.ssh/config | awk '{print $2}'`; do sshpass -p `grep "PAS $i" ~/.ssh/config | awk '{print $4}'` ssh-copy-id $i ; done
-
