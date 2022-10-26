@@ -1,0 +1,9 @@
+
+Service name is not 'mysql'
+Secret 'mysql-root-pass' doesn't exist
+Secret 'mysql-user-pass' doesn't exist
+Secret 'mysql-db-url' doesn't exist
+'MYSQL_ROOT_PASSWORD' ENV variable is not defined
+'MYSQL_DATABASE' ENV variable is not defined
+'MYSQL_USER' ENV variable is not defined
+'MYSQL_PASSWORD' ENV variable is not defined
