@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: mysql-deployment
   labels:
-    type: deployment
+    type: mysql-dplm
 spec:
   replicas: 2
   selector:
