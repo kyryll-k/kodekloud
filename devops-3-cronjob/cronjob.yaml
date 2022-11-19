@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: CronJob
+meta:
+  name: 
+spec:
+  schedule: "* * * * *"
+  jobTemplate:
+    spec:
+      containers:
+        - name: 
+          image:
+          imagePullPolicy:
+          command:
+            - /bin/sh
+        restartPolicy: OnFailure
