@@ -1,15 +1,19 @@
-apiVersion: v1
+apiVersion: batch/v1beta1
 kind: CronJob
-meta:
-  name: 
+metadata:
+  name: xfusion 
 spec:
-  schedule: "* */2 * * *"
+  schedule: "* */11 * * *"
   jobTemplate:
     spec:
-      containers:
-        - name: cron-xfusion
-          image: nginx:latest
-          imagePullPolicy: IfNotPresent
-          command:
-            - echo "Welcome to xfusioncorp!""
-        restartPolicy: OnFailure
+      template:
+        spec:
+          containers:
+           - name: cron-xfusion
+             image: nginx:latest
+             imagePullPolicy: IfNotPresent
+             command:
+             - /bin/sh
+             - "-c"
+             - "echo Welcome to xfusioncorp!"
+          restartPolicy: OnFailure
