@@ -3,13 +3,13 @@ kind: CronJob
 meta:
   name: 
 spec:
-  schedule: "* * * * *"
+  schedule: "* */2 * * *"
   jobTemplate:
     spec:
       containers:
-        - name: 
-          image:
-          imagePullPolicy:
+        - name: cron-xfusion
+          image: nginx:latest
+          imagePullPolicy: IfNotPresent
           command:
-            - /bin/sh
+            - echo "Welcome to xfusioncorp!""
         restartPolicy: OnFailure
