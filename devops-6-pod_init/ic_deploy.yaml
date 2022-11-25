@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ic-deploy-nautilus
+  labels:
+    app: ic-nautilus
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ic-nautilus
+  template:
+    metadata:
+      name: ic-deploy-nautilus
+      labels:
+        app: ic-nautilus
+    spec:
+      containers:
+      - name: ic-msg-nautilus
+        image: centos:latest
+        command: [ '/bin/bash', '-c', 'echo Init Done - Welcome to xFusionCorp Industries > /ic/blog']
+        volumeMounts:
+        - mountPath: "/ic"
+          name: ic-volume-nautilus
+      - name: ic-main-nautilus
+        image: centos:latest
+        command: [ '/bin/bash', '-c', 'while true; do cat /ic/blog; sleep 5; done']
+        volumeMounts:
+        - mountPath: "/ic"
+          name: ic-volume-nautilus
+      volumes:
+      - name: ic-volume-nautilus
+	emptyDir: {}
