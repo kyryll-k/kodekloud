@@ -15,13 +15,14 @@ spec:
       labels:
         app: ic-nautilus
     spec:
-      containers:
+      initContainers:
       - name: ic-msg-nautilus
         image: centos:latest
         command: [ '/bin/bash', '-c', 'echo Init Done - Welcome to xFusionCorp Industries > /ic/blog']
         volumeMounts:
         - mountPath: "/ic"
           name: ic-volume-nautilus
+      containers:
       - name: ic-main-nautilus
         image: centos:latest
         command: [ '/bin/bash', '-c', 'while true; do cat /ic/blog; sleep 5; done']
@@ -30,4 +31,6 @@ spec:
           name: ic-volume-nautilus
       volumes:
       - name: ic-volume-nautilus
-	emptyDir: {}
+        emptyDir: {}
+
+# https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
