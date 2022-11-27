@@ -1,0 +1,70 @@
+---
+- name: Adduser ansible
+  hosts: stapp01
+  become: yes
+
+  vars:
+      pass_a: !vault
+      pass_d: !vault
+
+  tasks:
+  - name: Create user adm1
+    user:
+      name: rob
+      group: admins
+      groups: wheel
+      home: /home/rob
+      password: "{{ pass_a }}"
+      append: yes
+
+  - name: Create user adm2
+    user:
+      name: david
+      group: admins
+      groups: wheel
+      home: /home/david
+      password: "{{ pass_a }}"
+      append: yes
+
+  - name: Create user adm3
+    user:
+      name: joy
+      group: admins
+      groups: wheel
+      home: /home/joy
+      password: "{{ pass_a }}"
+      append: yes
+
+  - name: Create user dev1
+    user:
+      name: tim
+      group: developers
+      home: /var/www
+      password: "{{ pass_d }}"
+
+  - name: Create user dev2
+    user:
+      name: ray
+      group: developers
+      home: /var/www
+      password: "{{ pass_d }}"
+
+  - name: Create user dev3
+    user:
+      name: jim
+      group: developers
+      home: /var/www
+      password: "{{ pass_d }}"
+
+  - name: Create user dev4
+    user:
+      name: mark
+      group: developers
+      home: /var/www
+      password: "{{ pass_d }}"
+
+# vault_password_file = ~/playbooks/secrets/vault.txt
+
+# cat ~/playbooks/secrets/vault.txt   ansible-vault encrypt_string # input encrypt pass # input string to crypt   
+# ctrl + d
+
