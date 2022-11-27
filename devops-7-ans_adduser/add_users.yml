@@ -4,8 +4,10 @@
   become: yes
 
   vars:
-      pass_a: !vault
-      pass_d: !vault
+      passw_a: !vault
+      passw_d: !vault
+      pass_d: $6$6Lx08MUZ$6YAOJZqy4QSoYqZbaBIIirVumOZGsYRRkWIsoRH5S3dhx3.KUW0mbv1o0NgJ1Xdpsq.cBWxVtbzIZYwL7g1LE1
+      pass_a: $6$6Lx08MUZ$6YAOJZqy4QSoYqZbaBIIirVumOZGsYRRkWIsoRH5S3dhx3.KUW0mbv1o0NgJ1Xdpsq.cBWxVtbzIZYwL7g1LE1
 
   tasks:
   - name: group admin create
