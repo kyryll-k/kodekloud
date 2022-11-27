@@ -8,6 +8,16 @@
       pass_d: !vault
 
   tasks:
+  - name: group admin create
+    ansible.builtin.group:
+      name: admins
+      state: present
+
+  - name: group developers create
+    ansible.builtin.group:
+      name: developers
+      state: present
+
   - name: Create user adm1
     user:
       name: rob
@@ -65,6 +75,6 @@
 
 # vault_password_file = ~/playbooks/secrets/vault.txt
 
-# cat ~/playbooks/secrets/vault.txt   ansible-vault encrypt_string # input encrypt pass # input string to crypt   
+# cat ~/playbooks/secrets/vault.txt   ansible-vault encrypt_string --stdin-name "some_name" # input encrypt pass # input string to crypt   
 # ctrl + d
 
