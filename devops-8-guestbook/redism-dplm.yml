@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-master
+  labels:
+    name: redis-master
+    tier: back-end
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      type: rdsm
+  template:
+    metadata:
+      name: redism-pod
+      labels:
+        type: rdsm
+    spec:
+      containers:
+        - name: master-redis-datacenter
+          image: redis
+          ports:
+            - containerPort: 6379
+              name: "redism-db"
+          resources:
+            requests:
+              memory: 100Mi
+              cpu: 100m

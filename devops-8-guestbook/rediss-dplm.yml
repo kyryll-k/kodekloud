@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-slave
+  labels:
+    tier: back-end
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      type: rdss
+  template:
+    metadata:
+      name: redism-pod
+      labels:
+        type: rdss
+    spec:
+      containers:
+        - name: slave-redis-datacenter
+          image: gcr.io/google_samples/gb-redisslave:v3
+          ports:
+            - containerPort: 6379
+              name: "rediss-db"
+          resources:
+            requests:
+              memory: 100Mi
+              cpu: 100m
+          env:
+            - name: GET_HOSTS_FROM
+              value: "dns"

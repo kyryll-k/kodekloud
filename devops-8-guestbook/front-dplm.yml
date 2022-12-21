@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  labels:
+    name: frontend
+    tier: front-end
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      type: frontend
+  template:
+    metadata:
+      name: front-pod
+      labels:
+        type: frontend
+    spec:
+      containers:
+        - name: php-redis-datacenter
+          image: gcr.io/google-samples/gb-frontend:v4
+          ports:
+            - containerPort: 80
+              name: "frontend"
+          resources:
+            requests:
+              memory: 100Mi
+              cpu: 100m
+          env:
+            - name: GET_HOSTS_FROM
+              value: "dns"
