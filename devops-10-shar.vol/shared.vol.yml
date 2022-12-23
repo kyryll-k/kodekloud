@@ -1,0 +1,24 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: volume-share-datacenter
+  labels:
+    app: shared    
+spec:
+  volumes:
+  - name: volume-share
+    emptyDir: {}
+  containers:
+  - name: volume-container-datacenter-1
+    image: fedora:latest
+    command: [ 'sh','-c','sleep 600']
+    volumeMounts:
+    - mountPath: "/tmp/ecommerce"
+      name: volume-share
+  - name: volume-container-datacenter-2
+    image: fedora:latest
+    command: [ 'sh','-c','sleep 600']
+    volumeMounts:
+    - mountPath: "/tmp/games"
+      name: volume-share
