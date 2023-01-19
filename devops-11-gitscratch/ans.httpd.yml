@@ -10,6 +10,7 @@
       pkg: 
         [
          "httpd",
+         "php",
          "php-fpm"
         ]
   
