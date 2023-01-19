@@ -1,0 +1,41 @@
+---
+- name: http_with_php
+  hosts: stapp01
+  become: yes
+
+  tasks:
+  
+  - name: install apache and php
+    yum:
+      pkg: 
+        [
+         "httpd",
+         "php-fpm"
+        ]
+  
+  - name: change root
+    lineinfile:
+      path: /etc/httpd/conf/httpd.conf
+      regexp: '^DocumentRoot '
+      line: 'DocumentRoot "/var/www/html/myroot"'
+      state: present
+
+  - name: folder creation 
+    file:
+      path: /var/www/html/myroot
+      state: directory
+      owner: apache
+      
+  - name: copy template to server
+    copy:
+      src: /home/thor/playbooks/templates/phpinfo.php.j2
+      dest: /var/www/html/myroot/phpinfo.php
+      owner: apache
+      group: apache
+
+  - name: start and enabled apache
+    service:
+      name: httpd
+      state: started
+      enabled: yes
+...

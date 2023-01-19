@@ -8,7 +8,7 @@ echo "StrictHostKeyChecking no" >> /etc/ssh/ssh_config && echo "ConnectTimeout 5
 exit
 EOF
 
-echo "alias pas='grep PAS .ssh/config '" >> ~/.bashrc
+echo "alias pas='grep PAS ~/.ssh/config '" >> ~/.bashrc
 echo "alias ssh='pas && ssh '" >> ~/.bashrc && source ~/.bashrc
-echo "Use PAS IF you need to see passwords!" && touch .ssh/config && chmod 600 .ssh/config
+echo "Use PAS IF you need to see passwords!" && touch ~/.ssh/config && chmod 600 ~/.ssh/config
 
