@@ -1,0 +1,14 @@
+class ntpconfig {
+        package { "ntp":
+                  ensure => "present",
+        }
+
+        file { "/etc/ntp.conf":
+               ensure => "present",
+               content => "server 3.europe.pool.ntp.org iburst",
+        }
+}
+
+node "stapp02.stratos.xfusioncorp.com" {
+        include ntpconfig
+        }
