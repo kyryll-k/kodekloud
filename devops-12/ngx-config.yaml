@@ -5,6 +5,8 @@ metadata:
   name: nginx-conf
 data:
   nginx.conf: |
+    events {
+      worker_connections 64;}
     http {
       server {
           listen       8097;

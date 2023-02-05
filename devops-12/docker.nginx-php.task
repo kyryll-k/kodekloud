@@ -29,4 +29,4 @@ You can use any labels as per your choice.
 Note: The kubectl utility on jump_host has been configured to work with the kubernetes cluster.
 
 
-
+kubectl cp /opt/index.php nginx-phpfpm:/var/www/html/ -c nginx-container
