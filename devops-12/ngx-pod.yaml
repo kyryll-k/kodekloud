@@ -11,10 +11,10 @@ spec:
       emptyDir: {}
     - name: nginx-config-volume
       configMap:
-        name: nginx-conf # place ConfigMap `nginx-conf` on /etc/nginx
+        name: nginx-config # place ConfigMap `nginx-conf` on /etc/nginx
         items:
           - key: nginx.conf
-            path: /etc/nginx/nginx.conf
+            path: nginx.conf
   containers:
   - name: nginx-container
     image: nginx:latest
