@@ -1,57 +1,27 @@
-There is an inventory file ~/playbooks/inventory on jump host.
+The Nautilus DevOps team wants to install and set up a simple httpd web server on all app servers in Stratos DC. Additionally, they want to deploy a sample web page for now using Ansible only. Therefore, write the required playbook to complete this task. Find more details about the task below.
 
-Create a playbook ~/playbooks/httpd.yml on jump host and perform the following tasks on App Server 3.
 
-a. Install httpd and php packages (whatever default version is available in yum repo).
 
-b. Change default document root of Apache to /var/www/html/myroot in default Apache config /etc/httpd/conf/httpd.conf. Make sure /var/www/html/myroot path exists (if not please create the same).
+We already have an inventory file under /home/thor/ansible directory on jump host. Create a playbook.yml under /home/thor/ansible directory on jump host itself.
 
-c. There is a template ~/playbooks/templates/phpinfo.php.j2 on jump host. Copy this template to the Apache document root you created as phpinfo.php file and make sure user owner and the group owner for this file is apache user.
+Using the playbook, install httpd web server on all app servers. Additionally, make sure its service should up and running.
 
-d. Start and enable httpd service.
+Using blockinfile Ansible module add some content in /var/www/html/index.html file. Below is the content:
 
-Note: Validation will try to run the playbook using command ansible-playbook -i inventory httpd.yml, so please make sure the playbook works this way without passing any extra arguments.
+Welcome to XfusionCorp!
 
----
-- name: http_with_php
-  hosts: stapp03
-  become: yes
+This is Nautilus sample file, created using Ansible!
 
-  tasks:
-  
-  - name: install apache and php
-    yum:
-      pkg: 
-        [
-         "httpd",
-         "php-fpm"
-        ]
-  
-  - name: change root
-    lineinfile:
-      path: /etc/httpd/conf/httpd.conf
-      line: 'bbbbbb'
-      firstmatch: true
-      insertbefore: '/var/www/html/myroot'
-      state: present
+Please do not modify this file manually!
 
-  - name: folder creation 
-    file:
-      path: /var/www/html/myroot
-      state: folder
-      owner: apache
-      
-  - name: copy template to server
-    copy:
-      src: /home/thor/playbooks/templates/phpinfo.php.j2
-      dest: /var/www/html/myroot/phpinfo.php
-      owner: apache
-      group: apache
+The /var/www/html/index.html file's user and group owner should be apache on all app servers.
 
-  - name: start and enabled apache
-    service:
-      name: httpd
-      state: started
-      enabled: yes
+The /var/www/html/index.html file's permissions should be 0755 on all app servers.
 
-...  
+Note:
+
+i. Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml so please make sure the playbook works this way without passing any extra arguments.
+
+ii. Do not use any custom or empty marker for blockinfile module.
+
+
