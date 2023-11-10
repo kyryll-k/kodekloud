@@ -1,0 +1,51 @@
+cat rds.yaml 
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: redis-deployment
+  name: redis-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis-deployment
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: redis-deployment
+    spec:
+      containers:
+      - image: redis:alpine
+        name: redis-container
+        resources:
+          requests:
+            cpu: "1"
+        ports:
+        - containerPort: 6379
+        volumeMounts:
+        - name: redis-config
+          mountPath: "/redis-config"
+          readOnly: true
+        - name: data
+          mountPath: "/redis-master-data"
+      volumes:
+      - name: redis-config
+        configMap:
+          name: my-redis-config
+      - name: data
+        emptyDir:
+status: {}
+
+
+
+thor@jump_host ~$ cat cm.yaml 
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: my-redis-config
+data:
+  redis-config: "maxmemory 2mb"
